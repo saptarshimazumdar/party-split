@@ -9,69 +9,79 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/Images/favicon/favicon-16x16.png">
     <link rel="manifest" href="/Images/favicon/site.webmanifest">
     <title>Party Split</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/modal.css">
 </head>
 
 <body>
-    <h2 class="headText">Party Split</h2>
-    <section id="dataslotNames">
-        <input type="text" name="" id="nameId" placeholder="Name" onkeyup="activateName(this)">
-        <button id="submitName" onclick="addName()" disabled>Add Name</button>
-        <textarea id="showNames" disabled></textarea>
-        <button id="submitAllName" onclick="submitAllName()">Finish Adding Names</button>
-    </section>
+    <h1 class="header">Splitsy</h1>
+    <div class="container" id="names-container">
+        <form class="form-group-names" id="form-group-names">
+            <textarea id="persons" name="persons" rows="4"
+                placeholder="  Type the name of the folks involved in the party, put comma separated names.."></textarea>
+            <button id="submitNames" type="submit">Proceed</button>
+        </form>
+        <table class="added-names" id="added-names">
+            <thead>
+                <tr>
+                    <th class="names-column">Names</th>
+                    <th class="names-action">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="namesList">
+                <!-- Names will be added here dynamically -->
+            </tbody>
+        </table>
+        <button class="proceed-adding-expenses" onclick="addExpenses()">Add Expenses >></button>
+    </div>
 
-    <section id="dataslotItems">
-        <input type="text" name="" id="itemId" placeholder="Item Name" onkeyup="">
-        <input type="number" name="" id="itemCostId" placeholder="Cost Price" onkeyup="activateItem(this)">
-        <div class="selectorSlot">
-            <h3>Shared Among</h3>
-            <div id="checkboxesSlot"></div>
-            <h3>Paid By</h3>
-            <div id="checkboxesSlotPayer"></div>
+    <div class="container hide" id="expenses-container">
+        <div id="expense-form" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <form class="gorm-group-expenses" id="form-group-expenses">
+                    <div class="form-group-expenses-line">
+                        <input type="text" id="expense-name" class="expense-name" name="item" placeholder="Expense Name"
+                            required>
+                        <input type="number" id="expense-amount" class="expense-amount" name="price"
+                            placeholder="Amount" min="0" required>
+                    </div>
+                    <div class="form-group-expenses-line">
+                        <div class="form-group-expenses-line-block">
+                            <label for="paid-equally">Who paid?</label>
+                            <select id="paid-by" class="expense-person" name="payer" required>
+                                <!-- Added dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group-expenses-line">
+                        <div class="form-group-expenses-line-block">
+                            <label for="paid-equally">Did everyone contribute?</label>
+                            <select id="paid-equally" class="expense-person" name="contribution" required
+                                onchange="toggleDividedAmong(this)">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group-expenses-line">
+                        <div id="divided-among" class="remove-from-screen payee-person">
+                            <!-- Added dynamically -->
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <button id="submitItem" onclick="addItem()" disabled>Add Item</button>
-        <table id="showItems" border=2>
-            <thead>
-                <tr>
-                    <td>Item Name</td>
-                    <td>Price</td>
-                    <td>Shared Bw</td>
-                </tr>
-            </thead>
-            <tbody id="populateItemData"></tbody>
-            <tfoot>
-                <tr>
-                    <td id="totalButton" onclick="calculateTotalSpent()">Generate Total</td>
-                    <td id="totalAmount" colspan=2></td>
-                </tr>
-            </tfoot>
-        </table>
-        <button id="submitAllItems" onclick="mapObject()">Finish Adding Items</button>
-    </section>
 
-    <section id="showMasterSplit">
-        <table border=4>
-            <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Have to Pay</td>
-                    <td>Has Paid</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody id="populateShareData"></tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4" id="includeDetailData"></td>
-                </tr>
-            </tfoot>
-        </table>
-
-        <button id="completeSession" onclick="window.location.reload(false)">Complete</button>
-    </section>
+        <button id="go-back" class="go-back-btn" title="Go Back" onclick="editNames()">&#8656;</button>
+        <button id="toggle-expense-form" class="toggle-expense-form-btn" title="Add Expense">&plus;</button>
+    </div>
 
 </body>
-<script src="app.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/modal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.2.0/uuid.min.js"
+    integrity="sha512-X0CJvcClD8EXFn5Oq8BD5lIsznKDfxb0Sf9Wr8MCCTyAEWaAAxr0Jvm3qyofsmN7eSHMZ0PPQGjVKroLAfexrA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </html>

@@ -36,10 +36,17 @@
     </div>
 
     <div class="container hide" id="expenses-container">
+        <div class="expense-list">
+            <table class="expense-list-table">
+                <tbody id="expense-list-table-body">
+                    <!-- Expense items will be added here dynamically -->
+                </tbody>
+            </table>
+        </div>
         <div id="expense-form" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <form class="gorm-group-expenses" id="form-group-expenses">
+                <form class="form-group-expenses" id="form-group-expenses">
                     <div class="form-group-expenses-line">
                         <input type="text" id="expense-name" class="expense-name" name="item" placeholder="Expense Name"
                             required>
@@ -69,6 +76,12 @@
                             <!-- Added dynamically -->
                         </div>
                     </div>
+                    <div class="form-group-expenses-line">
+                        <div class="form-group-expenses-line-block button-holder">
+                            <button type="reset" id="closeExpenseForm" class="close-expense-btn">&#10007;</button>
+                            <button type="submit" id="addExpense" class="add-expense-btn">&#10003;</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -78,6 +91,7 @@
     </div>
 
 </body>
+<script src="scripts/util.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/modal.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.2.0/uuid.min.js"

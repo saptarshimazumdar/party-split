@@ -1,14 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-*, html {
+
+*,
+html {
     font-family: 'Poppins', sans-serif;
 }
+
 body {
-    background: linear-gradient(rgba(0,0,0,.5), rgba(255,255,255,.5)), url('https://picsum.photos/1920/1080.jpg');
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(255, 255, 255, .5)), url('https://picsum.photos/1920/1080.jpg');
     /* url('https://picsum.photos/1920/1080.jpg') */
     background-size: cover;
     background-repeat: no-repeat;
     margin: 0;
 }
+
 .header {
     width: calc(100vw - 2rem);
     margin: 1rem auto;
@@ -19,6 +23,7 @@ body {
     line-height: 5rem;
     border-radius: 1rem;
 }
+
 .container {
     width: calc(100vw - 4rem);
     margin: 1rem;
@@ -58,16 +63,19 @@ body {
     transition: background-color 0.3s ease;
     font-weight: bolder;
 }
+
 table.added-names {
     width: 100%;
     margin: 1rem auto;
     border-collapse: collapse;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-table.added-names th, table.added-names td {
+
+table.added-names th,
+table.added-names td {
     border-bottom: 1.5px solid whitesmoke;
     padding: 0.5rem 1rem;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: whitesmoke;
 }
 
@@ -86,10 +94,12 @@ table.added-names .names-column {
     text-overflow: ellipsis;
 }
 
-table.added-names .names-action, table.added-names .column-action {
+table.added-names .names-action,
+table.added-names .column-action {
     text-align: right;
     width: 10%;
 }
+
 table.added-names .column-action {
     cursor: pointer;
 }
@@ -124,23 +134,28 @@ table.added-names .column-action {
     flex-direction: row;
     justify-content: space-evenly;
 }
+
 .form-group-expenses-line-block {
     width: 100%;
 }
+
 .form-group-expenses-line-block label {
     color: transparent;
     -webkit-text-stroke: 0.8px #000;
     font-weight: 300;
 }
+
 .form-group-expenses-line-block select {
     margin: 5px 0 0 0;
 }
+
 .form-group-expenses-line .expense-name {
     width: 70%;
     border-radius: 0.5rem 0.5rem 0.5rem 1.5rem;
     padding: 0.5rem;
     background-color: rgb(245, 245, 245, 0.8);
 }
+
 .form-group-expenses-line .expense-amount {
     width: 30%;
     border-radius: 0.5rem 0.5rem 1.5rem 0.5rem;
@@ -168,7 +183,7 @@ table.added-names .column-action {
 }
 
 .payee-person .stakeholder {
-    flex: 1 1 33%; 
+    flex: 1 1 50%;
 }
 
 
@@ -223,4 +238,68 @@ table.added-names .column-action {
     font-weight: bolder;
     color: transparent;
     -webkit-text-stroke: 2px #000;
+}
+
+.button-holder {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-group-expenses-line-block.button-holder .add-expense-btn {
+    zoom: 1.5;
+    border: 1px solid whitesmoke;
+    background: transparent;
+    border-radius: 25%;
+}
+
+.form-group-expenses-line-block.button-holder .close-expense-btn {
+    zoom: 1.5;
+    border: 1px solid whitesmoke;
+    background: transparent;
+    border-radius: 25%;
+}
+
+.expense-list {
+    height: calc(100% - 5rem);
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.expense-list-table {
+    width: 100%;
+}
+
+.expense-list-table-item {
+    color: whitesmoke;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.expense-list-table-item .line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0.5rem 0;
+    position: relative;
+}
+
+.expense-list-table-item-name,
+.expense-list-table-item-paid-by {
+    flex: 10;
+    padding-left: 2rem;
+}
+
+.no-expenses {
+    color: whitesmoke;
+    width: 100%;
+    text-align: center;
+}
+
+.expense-list-table-item .line:first-child::before {
+    content: '₿';
+    flex: 1;
+    position: absolute;
+    top: 25%;
+    font-size: 1.5rem;
 }

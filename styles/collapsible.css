@@ -1,0 +1,43 @@
+.individual-settlement {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: whitesmoke;
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1rem;
+}
+
+.active,
+.individual-settlement:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.collapsible-settlement-content {
+    padding: 0 1rem;
+    background-color: transparent;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    color: whitesmoke;
+}
+
+.settlement-list-item {
+    margin: 0.25rem 0;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.individual-settlement:after {
+    content: '\002B';
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+    font-size: 1rem;
+}
+
+.active:after {
+    content: "\2212";
+}

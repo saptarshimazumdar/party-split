@@ -11,6 +11,7 @@
     <title>Party Split</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/modal.css">
+    <link rel="stylesheet" href="styles/collapsible.css">
 </head>
 
 <body>
@@ -42,6 +43,7 @@
                     <!-- Expense items will be added here dynamically -->
                 </tbody>
             </table>
+            <button class="proceed-to-settle" onclick="settleExpenses()">Settle Expenses >></button>
         </div>
         <div id="expense-form" class="modal">
             <!-- Modal content -->
@@ -90,10 +92,17 @@
         <button id="toggle-expense-form" class="toggle-expense-form-btn" title="Add Expense">&plus;</button>
     </div>
 
+    <div class="container hide" id="settlement-container">
+        <div class="settlement-list" id="settlement-list">
+            <!-- Settlement items will be added here dynamically -->
+        </div>
+    </div>
+
 </body>
 <script src="scripts/util.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/modal.js"></script>
+<script src="scripts/collapsible.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.2.0/uuid.min.js"
     integrity="sha512-X0CJvcClD8EXFn5Oq8BD5lIsznKDfxb0Sf9Wr8MCCTyAEWaAAxr0Jvm3qyofsmN7eSHMZ0PPQGjVKroLAfexrA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>

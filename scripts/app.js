@@ -6,6 +6,9 @@ const EXPENSES_CONTAINER = 'expenses-container';
 const PAID_BY = 'paid-by';
 const EXPENSE_FORM = 'form-group-expenses';
 const EXPENSE_LIST_TABLE_BODY = 'expense-list-table-body';
+const DIVIDED_AMONG = 'divided-among';
+const SETTLEMENT_CONTAINER = 'settlement-container';
+const SETTLEMENT_LIST = 'settlement-list';
 
 
 const formGroupName = document.getElementById(FORM_GROUP_NAMES);
@@ -13,8 +16,10 @@ const expenseFormGroup = document.getElementById(EXPENSE_FORM);
 const expenseListTableBody = document.getElementById(EXPENSE_LIST_TABLE_BODY);
 const nameContainer = document.getElementById(NAME_CONTAINER);
 const expenseContainer = document.getElementById(EXPENSES_CONTAINER);
-const dividedAmong = document.getElementById('divided-among');
+const dividedAmong = document.getElementById(DIVIDED_AMONG);
 const paidBy = document.getElementById(PAID_BY);
+const settlementContainer = document.getElementById(SETTLEMENT_CONTAINER);
+const settlementList = document.getElementById(SETTLEMENT_LIST);
 
 
 formGroupName.addEventListener('submit', function (event$) {
@@ -98,6 +103,69 @@ const setDividedAmong = () => {
                 <label for="${name.toLowerCase()}-payee-id">${name}</label>
             </span>
         `).join('\n');
+}
+
+const fillExpenseTable = () => {
+    const existingObject = localStorage.getItem('expenses');
+    var template = `
+            <tr>
+                <div class="no-expenses">No expenses recorded yet.</div>
+            </tr>
+        `;
+    if (existingObject) {
+        const expenses = JSON.parse(existingObject);
+        if (expenses.length >= 0) {
+            template = expenses.map(expense => `
+                <div class="expense-list-table-item">
+                    <div class="line">
+                        <span class="expense-list-table-item-name">
+                            <strong>${expense.item}</strong>
+                        </span>
+                        <span class="expense-list-table-item-amount">
+                            <small>&#8377;${expense.price}</small>
+                        </span>
+                    </div>
+                    <div class="line">
+                        <span class="expense-list-table-item-paid-by">
+                            <small>${expense.payer}</small>
+                        </span>
+                    </div>
+                </div>
+            `).join('\n');
+        }
+    }
+
+    expenseListTableBody.innerHTML = template;
+}
+
+const fillSettlementList = () => {
+    const existingObject = localStorage.getItem('split');
+    if (!existingObject) {
+        settlementList.innerHTML = `<div class="no-expenses">No stakeholders found.</div>`;
+    } else {
+        const splitData = JSON.parse(existingObject);
+        Object.entries(splitData).forEach(([name, data]) => {
+            const spend = data.spend.reduce((acc, item) => acc + item.price, 0);
+            const expense = data.expense.reduce((acc, item) => acc + item.price, 0);
+            splitData[name].balance = round(spend - expense);
+        });
+
+        settlementList.innerHTML = getAvailableStakeholders().map(name => {
+            const data = splitData[name];
+            const [balance, indicator] = data.balance > 0 ? [data.balance, 'needs to collect'] : [-1 * data.balance, 'needs to pay'];
+            return `
+                <div class="settlement-list-item">
+                    <button type="button" class="individual-settlement">${name} ${indicator} &#8377; ${balance}</button>
+                    <div class="collapsible-settlement-content">
+                        <small>
+                            <p>You have paid for: ${validEmpty(data.spend.map(it => it.item + ' (&#8377;' + it.price + ')').join(', ')) ?? 'nothing as of now'}</p>
+                            <p>You have spent on: ${validEmpty(data.expense.map(it => it.item + ' (&#8377;' + it.price + ')').join(', ')) ?? 'nothing as of now'}</p>
+                        </small>
+                    </div>
+                </div>
+            `;
+        }).join('\n');
+    }
 }
 
 const removeStakeholders = (name) => {
@@ -184,37 +252,15 @@ const populateExpense = (response, everyone) => {
     localStorage.setItem('expenses', JSON.stringify(existingObject));
 }
 
-const fillExpenseTable = () => {
-    const existingObject = localStorage.getItem('expenses');
-    var template = `
-            <tr>
-                <div class="no-expenses">No expenses recorded yet.</div>
-            </tr>
-        `;
-    if (existingObject) {
-        const expenses = JSON.parse(existingObject);
-        if (expenses.length >= 0) {
-            template = expenses.map(expense => `
-                <div class="expense-list-table-item">
-                    <div class="line">
-                        <span class="expense-list-table-item-name">
-                            <strong>${expense.item}</strong>
-                        </span>
-                        <span class="expense-list-table-item-amount">
-                            <small>&#8377;${expense.price}</small>
-                        </span>
-                    </div>
-                    <div class="line">
-                        <span class="expense-list-table-item-paid-by">
-                            <small>${expense.payer}</small>
-                        </span>
-                    </div>
-                </div>
-            `).join('\n');
-        }
-    }
-
-    expenseListTableBody.innerHTML = template;
+const settleExpenses = () => {
+    expenseContainer.classList.add('hide');
+    settlementContainer.classList.remove('hide');
+    setTimeout(() => {
+        expenseContainer.style.display = 'none';
+        settlementContainer.style.display = 'inherit';
+    }, 25);
+    fillSettlementList();
+    enableSettlements();
 }
 
 setStakeholders();

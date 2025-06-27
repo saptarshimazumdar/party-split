@@ -188,14 +188,16 @@ table.added-names .column-action {
 
 
 #names-container,
-#expenses-container {
+#expenses-container,
+#settlement-container {
     opacity: 1;
     visibility: visible;
     transition: opacity 0.5s ease, visibility 0.5s ease, zoom 0.5s ease;
 }
 
 #names-container.hide,
-#expenses-container.hide {
+#expenses-container.hide,
+#settlement-container.hide {
     opacity: 0;
     zoom: 0.0001;
     visibility: hidden;
@@ -268,6 +270,7 @@ table.added-names .column-action {
 
 .expense-list-table {
     width: 100%;
+    height: calc(100% - 4rem);
 }
 
 .expense-list-table-item {
@@ -302,4 +305,20 @@ table.added-names .column-action {
     position: absolute;
     top: 25%;
     font-size: 1.5rem;
+}
+
+.proceed-to-settle {
+    width: calc(100% - 2rem);
+    margin: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: normal;
+    border: 1px solid rgb(245, 245, 245, 0.8);
+    border-radius: 0.5rem 1.5rem 1.5rem;
+    background-color: transparent;
+    color: whitesmoke;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1rem;
 }
